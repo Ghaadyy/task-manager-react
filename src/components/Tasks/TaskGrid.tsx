@@ -1,28 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import TaskItem, { ItemTypes } from "./TaskItem";
 import { useDrop } from "react-dnd";
 import Card from "../UI/Card";
-
-enum TaskStatus {
-  Todo,
-  InProgess,
-  Completed,
-}
-
-enum TaskPriority {
-  Low,
-  Medium,
-  High,
-}
-
-export type Task = {
-  title: string;
-  id: string;
-  status: TaskStatus;
-  priority: TaskPriority;
-};
+import { TaskStatus, Task } from "../../Models/Task";
+import UserContext from "../../store/user-context";
 
 const TaskGrid = () => {
+  const userCtx = useContext(UserContext);
   const [tasks, setTasks] = useState<Task[]>([]);
 
   const [, todoDropRef] = useDrop(() => ({
@@ -71,14 +55,14 @@ const TaskGrid = () => {
   }));
 
   useEffect(() => {
-    fetch("https://localhost:7272/api/tasks")
+    fetch(`https://localhost:7272/api/tasks/user/${userCtx.user?.id}`, {
+      headers: {
+        Authorization: `Bearer ${userCtx.token}`,
+      },
+    })
       .then(async (res) => setTasks(await res.json()))
       .catch((e) => console.log(e));
-  }, []);
-
-  // tasks?.forEach((task) => {
-  //   console.log(task);
-  // });
+  }, [userCtx.token, userCtx.user?.id]);
 
   const todoTasks = tasks?.filter((task) => task.status === TaskStatus.Todo);
 
@@ -90,7 +74,7 @@ const TaskGrid = () => {
   );
 
   return (
-    <div className="flex flex-row gap-3">
+    <div className="flex flex-row gap-8">
       <div className="flex flex-col gap-3">
         <h1 className="font-bold text-2xl">To do</h1>
         {todoTasks.map((task) => (

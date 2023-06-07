@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Input from "../components/UI/Input";
 import Button from "../components/UI/Button";
 import { useNavigate } from "react-router-dom";
+import UserContext from "../store/user-context";
 
 const CreateTaskPage = () => {
+  const userCtx = useContext(UserContext);
   const navigate = useNavigate();
   const [title, setTitle] = useState<string>("");
   const [priority, setPriority] = useState<number>();
@@ -18,12 +20,14 @@ const CreateTaskPage = () => {
       title,
       priority,
       status,
+      userID: userCtx.user?.id,
     };
 
     const res = await fetch("https://localhost:7272/api/tasks", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${userCtx.token}`,
       },
       body: JSON.stringify(item),
     });

@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import Input from "../components/UI/Input";
 import Button from "../components/UI/Button";
-import UserContext from "../store/user-context";
+import UserContext, { User } from "../store/user-context";
 import { useNavigate } from "react-router-dom";
 
 const LoginPage: React.FC = () => {
@@ -23,7 +23,7 @@ const LoginPage: React.FC = () => {
     };
 
     try {
-      const res = await fetch("https://localhost:7272/api/users/", {
+      const res = await fetch("https://localhost:7272/api/users/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -34,11 +34,13 @@ const LoginPage: React.FC = () => {
       if (!res.ok) {
         alert("an error occured");
       } else {
-        userCtx?.login(email, password);
+        type ResponeType = { token: string; user: User };
+        const data: ResponeType = await res.json();
+        userCtx.login(data.token, data.user);
         navigate("/");
       }
     } catch (e) {
-      alert(e);
+      alert("An error occured!");
     }
 
     setEmail("");

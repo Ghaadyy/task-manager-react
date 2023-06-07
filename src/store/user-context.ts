@@ -1,12 +1,27 @@
 import { createContext } from "react";
 
+export type User = {
+  email: string;
+  password: string;
+  id: string;
+  firstName: string;
+  lastName: string;
+};
+
 export type UserContextType = {
-  username: string | null;
+  token: string | null;
+  user: User | null;
   isLoggedIn: boolean;
-  login: (email: string, password: string) => void;
+  login: (token: string, user: User) => void;
   logout: () => void;
 };
 
-const UserContext = createContext<UserContextType | null>(null);
+const UserContext = createContext<UserContextType>({
+  token: null,
+  user: null,
+  isLoggedIn: false,
+  login: () => {},
+  logout: () => {},
+});
 
 export default UserContext;

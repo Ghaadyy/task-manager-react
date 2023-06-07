@@ -1,7 +1,7 @@
 import React from "react";
 import Card from "../UI/Card";
 import { useDrag } from "react-dnd";
-import { Task } from "./TaskGrid";
+import { Task, TaskPriority } from "../../Models/Task";
 
 type Props = {
   task: Task;
@@ -20,24 +20,28 @@ const TaskItem: React.FC<Props> = ({ task }) => {
     }),
   }));
 
+  let priorityTagName: string;
+  let priorityTagColor: string;
+
+  if (task.priority === TaskPriority.High) {
+    priorityTagName = "High";
+    priorityTagColor = "bg-red-400";
+  } else if (task.priority === TaskPriority.Medium) {
+    priorityTagName = "Medium";
+    priorityTagColor = "bg-blue-400";
+  } else {
+    priorityTagName = "Low";
+    priorityTagColor = "bg-yellow-400";
+  }
+
   return (
     <div ref={drag}>
       <Card>
         <h1 className="font-bold text-lg mb-3">{task.title}</h1>
         <div className="flex flex-row flex-wrap gap-2">
-          <div className="bg-red-400 rounded-md px-2 py-1">
+          <div className={`${priorityTagColor} rounded-md px-2 py-1`}>
             <p className="text-white text-sm font-semibold select-none cursor-default">
-              High
-            </p>
-          </div>
-          <div className="bg-blue-400 rounded-md px-2 py-1">
-            <p className="text-white text-sm font-semibold select-none cursor-default">
-              Medium
-            </p>
-          </div>
-          <div className="bg-yellow-400 rounded-md px-2 py-1">
-            <p className="text-white text-sm font-semibold select-none cursor-default">
-              Low
+              {priorityTagName}
             </p>
           </div>
         </div>

@@ -1,18 +1,25 @@
 import React, { useState } from "react";
-import UserContext, { UserContextType } from "../store/user-context";
+import UserContext, { User, UserContextType } from "../store/user-context";
 
 const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [token, setToken] = useState<string | null>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   const defaultState: UserContextType = {
     isLoggedIn,
-    username: null,
-    login(email, password) {
+    token,
+    user,
+    login(userToken, loggedInUser) {
+      setToken(userToken);
+      setUser(loggedInUser);
       setIsLoggedIn(true);
     },
     logout() {
+      setToken(null);
+      setUser(null);
       setIsLoggedIn(false);
     },
   };
