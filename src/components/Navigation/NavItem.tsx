@@ -6,7 +6,7 @@ export const NavItem: React.FC<Props> = ({ name, link }) => {
   return (
     <NavLink
       className={({ isActive }) =>
-        `text-white font-bold text-xl ${isActive && "underline"}`
+        `text-xl ${isActive ? "text-white font-bold" : "text-blue-100 "}`
       }
       to={link}
     >

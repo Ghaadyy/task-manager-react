@@ -5,7 +5,7 @@ import Button from "../components/UI/Button";
 const SignUpPage: React.FC = () => {
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
-  const [error, setError] = useState<string | undefined>(undefined);
+  const [error] = useState<string | undefined>(undefined);
 
   const onClickHandler: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();

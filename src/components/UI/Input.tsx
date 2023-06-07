@@ -1,7 +1,7 @@
 import React from "react";
 
 type Props = {
-  error: string | undefined;
+  error?: string | undefined;
 };
 
 type InputProps = React.DetailedHTMLProps<

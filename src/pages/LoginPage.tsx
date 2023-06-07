@@ -1,23 +1,48 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Input from "../components/UI/Input";
 import Button from "../components/UI/Button";
+import UserContext from "../store/user-context";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage: React.FC = () => {
+  const navigate = useNavigate();
+  const userCtx = useContext(UserContext);
+
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [error, setError] = useState<string | undefined>(undefined);
+  const [error] = useState<string | undefined>(undefined);
 
-  const onClickHandler: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+  const onClickHandler: React.MouseEventHandler<HTMLButtonElement> = async (
+    e
+  ) => {
     e.preventDefault();
 
-    console.log({
+    const item = {
       email,
       password,
-    });
+    };
+
+    try {
+      const res = await fetch("https://localhost:7272/api/users/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(item),
+      });
+
+      if (!res.ok) {
+        alert("an error occured");
+      } else {
+        userCtx?.login(email, password);
+        navigate("/");
+      }
+    } catch (e) {
+      alert(e);
+    }
 
     setEmail("");
     setPassword("");
-
     // setError("Please fill the field");
   };
 

@@ -1,6 +1,8 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import RootLayout from "./components/Layout/RootLayout";
 import LoginPage from "./pages/LoginPage";
+import TasksPage from "./pages/TasksPage";
+import CreateTaskPage from "./pages/CreateTaskPage";
 
 const router = createBrowserRouter([
   {
@@ -11,6 +13,14 @@ const router = createBrowserRouter([
       {
         path: "auth",
         element: <LoginPage />,
+      },
+      {
+        path: "tasks",
+        element: <TasksPage />,
+      },
+      {
+        path: "create-task",
+        element: <CreateTaskPage />,
       },
     ],
   },
