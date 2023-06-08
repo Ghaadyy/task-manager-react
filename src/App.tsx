@@ -4,6 +4,7 @@ import LoginPage from "./pages/LoginPage";
 import TasksPage from "./pages/TasksPage";
 import CreateTaskPage from "./pages/CreateTaskPage";
 import SignUpPage from "./pages/SignUpPage";
+import EditTaskPage from "./pages/EditTaskPage";
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: "create-task",
         element: <CreateTaskPage />,
+      },
+      {
+        path: "edit-task/:id",
+        element: <EditTaskPage />,
       },
     ],
   },

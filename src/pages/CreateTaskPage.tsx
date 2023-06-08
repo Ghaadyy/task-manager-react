@@ -53,23 +53,35 @@ const CreateTaskPage = () => {
         value={title}
       />
       <select
-        className=""
-        placeholder="Priority"
+        name="priority"
+        className="max-w-[250px] w-full border-2 rounded-lg p-3 outline-none focus:border-[#979797]"
         onChange={(e) => setPriority(Number.parseInt(e.target.value))}
       >
+        <option selected={true} disabled>
+          Choose a priority
+        </option>
         <option value={0}>Low</option>
         <option value={1}>Medium</option>
         <option value={2}>High</option>
       </select>
       <select
-        className=""
-        placeholder="Status"
+        name="status"
+        className="max-w-[250px] w-full border-2 rounded-lg p-3 outline-none focus:border-[#979797]"
         onChange={(e) => setStatus(Number.parseInt(e.target.value))}
       >
+        <option selected={true} disabled>
+          Choose a status
+        </option>
         <option value={0}>Todo</option>
         <option value={1}>In Progress</option>
         <option value={2}>Completed</option>
       </select>
+      {/* <Input
+        type="date"
+        name="date"
+        value={date}
+        onChange={(e) => setDate(e.target.value)}
+      /> */}
       <Button type="submit" name="Submit" onClick={onClickHandler} />
     </form>
   );

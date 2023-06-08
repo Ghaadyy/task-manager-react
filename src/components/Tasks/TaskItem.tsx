@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import Card from "../UI/Card";
 import { useDrag } from "react-dnd";
 import { Task, TaskPriority } from "../../Models/Task";
+import { useNavigate } from "react-router-dom";
+import UserContext from "../../store/user-context";
+import TaskContext from "../../store/task-context";
 
 type Props = {
   task: Task;
@@ -12,6 +15,12 @@ export const ItemTypes = {
 };
 
 const TaskItem: React.FC<Props> = ({ task }) => {
+  const taskCtx = useContext(TaskContext);
+  const navigate = useNavigate();
+  const userCtx = useContext(UserContext);
+
+  const [isHover, setIsHover] = useState<boolean>(false);
+
   const [, drag] = useDrag(() => ({
     type: ItemTypes.CARD,
     item: task,
@@ -34,9 +43,38 @@ const TaskItem: React.FC<Props> = ({ task }) => {
     priorityTagColor = "bg-yellow-400";
   }
 
+  const deleteHandler = () => {
+    fetch(`https://localhost:7272/api/tasks/${task.id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${userCtx.token}`,
+      },
+    })
+      .then(() => {
+        taskCtx.deleteTask(task);
+      })
+      .catch((e) => console.log(e));
+  };
+
   return (
-    <div ref={drag}>
-      <Card>
+    <div
+      ref={drag}
+      className="relative"
+      onMouseOver={() => setIsHover(true)}
+      onMouseOut={() => setIsHover(false)}
+    >
+      <div
+        onClick={deleteHandler}
+        className={`${
+          isHover ? "opacity-100" : "opacity-0"
+        } cursor-pointer h-7 w-7 bg-red-500 rounded-lg absolute right-0 mt-[-10px] mr-[-10px] flex items-center justify-center text-white font-bold transition-all duration-200 ease-in-out`}
+      >
+        X
+      </div>
+      <Card
+        onClick={() => navigate(`/edit-task/${task.id}`)}
+        className="cursor-pointer"
+      >
         <h1 className="font-bold text-lg mb-3">{task.title}</h1>
         <div className="flex flex-row flex-wrap gap-2">
           <div className={`${priorityTagColor} rounded-md px-2 py-1`}>

@@ -1,58 +1,17 @@
-import React, { useContext, useEffect, useState } from "react";
-import TaskItem, { ItemTypes } from "./TaskItem";
-import { useDrop } from "react-dnd";
-import Card from "../UI/Card";
-import { TaskStatus, Task } from "../../Models/Task";
+import { useContext, useEffect } from "react";
+import { TaskStatus } from "../../Models/Task";
 import UserContext from "../../store/user-context";
+import TaskContext from "../../store/task-context";
+import { useCreateDropRef } from "../../hooks/createDropRef";
+import TaskColumn from "./TaskColumn";
 
 const TaskGrid = () => {
+  const taskCtx = useContext(TaskContext);
   const userCtx = useContext(UserContext);
-  const [tasks, setTasks] = useState<Task[]>([]);
 
-  const [, todoDropRef] = useDrop(() => ({
-    accept: ItemTypes.CARD,
-    drop: (item: Task, monitor) => {
-      item.status = TaskStatus.Todo;
-      setTasks((prevTasks) => {
-        return prevTasks.map((task) => {
-          if (task.id === item.id) {
-            return item;
-          }
-          return task;
-        });
-      });
-    },
-  }));
-
-  const [, inProgressDropRef] = useDrop(() => ({
-    accept: ItemTypes.CARD,
-    drop: (item: Task, monitor) => {
-      item.status = TaskStatus.InProgess;
-      setTasks((prevTasks) => {
-        return prevTasks.map((task) => {
-          if (task.id === item.id) {
-            return item;
-          }
-          return task;
-        });
-      });
-    },
-  }));
-
-  const [, completedDropRef] = useDrop(() => ({
-    accept: ItemTypes.CARD,
-    drop: (item: Task, monitor) => {
-      item.status = TaskStatus.Completed;
-      setTasks((prevTasks) => {
-        return prevTasks.map((task) => {
-          if (task.id === item.id) {
-            return item;
-          }
-          return task;
-        });
-      });
-    },
-  }));
+  const todoDropRef = useCreateDropRef(TaskStatus.Todo);
+  const inProgressDropRef = useCreateDropRef(TaskStatus.InProgess);
+  const completedDropRef = useCreateDropRef(TaskStatus.Completed);
 
   useEffect(() => {
     fetch(`https://localhost:7272/api/tasks/user/${userCtx.user?.id}`, {
@@ -60,54 +19,35 @@ const TaskGrid = () => {
         Authorization: `Bearer ${userCtx.token}`,
       },
     })
-      .then(async (res) => setTasks(await res.json()))
+      .then(async (res) => {
+        const data = await res.json();
+        console.log(data);
+        taskCtx.getTasks(data);
+      })
       .catch((e) => console.log(e));
-  }, [userCtx.token, userCtx.user?.id]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  const todoTasks = tasks?.filter((task) => task.status === TaskStatus.Todo);
+  const todoTasks = taskCtx.tasks.filter(
+    (task) => task.status === TaskStatus.Todo
+  );
 
-  const inProgressTasks = tasks?.filter(
+  const inProgressTasks = taskCtx.tasks.filter(
     (task) => task.status === TaskStatus.InProgess
   );
-  const completedTasks = tasks?.filter(
+  const completedTasks = taskCtx.tasks.filter(
     (task) => task.status === TaskStatus.Completed
   );
 
   return (
-    <div className="flex flex-row gap-8">
-      <div className="flex flex-col gap-3">
-        <h1 className="font-bold text-2xl">To do</h1>
-        {todoTasks.map((task) => (
-          <TaskItem key={task.id} task={task} />
-        ))}
-        <div ref={todoDropRef}>
-          <Card isMoveable={false}>
-            <div className="m-auto text-[#a1a1a1]">Drop task here</div>
-          </Card>
-        </div>
-      </div>
-      <div className="flex flex-col gap-3">
-        <h1 className="font-bold text-2xl">In Progress</h1>
-        {inProgressTasks?.map((task) => (
-          <TaskItem key={task.id} task={task} />
-        ))}
-        <div ref={inProgressDropRef}>
-          <Card isMoveable={false}>
-            <div className="m-auto text-[#a1a1a1]">Drop task here</div>
-          </Card>
-        </div>
-      </div>
-      <div className="flex flex-col gap-3">
-        <h1 className="font-bold text-2xl">Completed</h1>
-        {completedTasks?.map((task) => (
-          <TaskItem key={task.id} task={task} />
-        ))}
-        <div ref={completedDropRef}>
-          <Card isMoveable={false}>
-            <div className="m-auto text-[#a1a1a1]">Drop task here</div>
-          </Card>
-        </div>
-      </div>
+    <div className="flex flex-row gap-8 overflow-x-scroll px-8 py-4 max-h-[90vh] overflow-y-scroll">
+      <TaskColumn ref={todoDropRef} text="To do" tasks={todoTasks} />
+      <TaskColumn
+        ref={inProgressDropRef}
+        text="To do"
+        tasks={inProgressTasks}
+      />
+      <TaskColumn ref={completedDropRef} text="To do" tasks={completedTasks} />
     </div>
   );
 };

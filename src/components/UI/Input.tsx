@@ -20,7 +20,7 @@ const Input: React.FC<InputProps> = ({
   return (
     <>
       <input
-        className="border-2 rounded-lg p-3 outline-none focus:border-[#979797]"
+        className="max-w-[250px] w-full border-2 rounded-lg p-3 outline-none focus:border-[#979797]"
         type={type}
         name={name}
         placeholder={name}

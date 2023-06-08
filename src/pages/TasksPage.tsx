@@ -5,7 +5,7 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 
 const TasksPage = () => {
   return (
-    <div className="flex items-center justify-center mt-5">
+    <div className="flex items-center justify-center">
       <DndProvider backend={HTML5Backend}>
         <TaskGrid />
       </DndProvider>
