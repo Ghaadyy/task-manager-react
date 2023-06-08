@@ -17,7 +17,7 @@ const TaskColumn = forwardRef(
           <TaskItem key={task.id} task={task} />
         ))}
         <div ref={ref}>
-          <Card isMoveable={false}>
+          <Card isMoveable={false} small={tasks.length !== 0}>
             <div className="m-auto text-[#a1a1a1]">Drop task here</div>
           </Card>
         </div>

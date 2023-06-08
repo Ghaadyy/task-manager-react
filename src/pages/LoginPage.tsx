@@ -10,7 +10,8 @@ const LoginPage: React.FC = () => {
 
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [error] = useState<string | undefined>(undefined);
+
+  const [error, setError] = useState<string>();
 
   const onClickHandler: React.MouseEventHandler<HTMLButtonElement> = async (
     e
@@ -31,13 +32,14 @@ const LoginPage: React.FC = () => {
         body: JSON.stringify(item),
       });
 
-      if (!res.ok) {
-        alert("an error occured");
-      } else {
+      if (res.ok) {
         type ResponeType = { token: string; user: User };
         const data: ResponeType = await res.json();
         userCtx.login(data.token, data.user);
         navigate("/");
+      } else {
+        const data = await res.json();
+        setError(data.message);
       }
     } catch (e) {
       alert("An error occured!");
@@ -45,7 +47,6 @@ const LoginPage: React.FC = () => {
 
     setEmail("");
     setPassword("");
-    // setError("Please fill the field");
   };
 
   return (
@@ -56,15 +57,14 @@ const LoginPage: React.FC = () => {
         name="Email"
         onChange={(e) => setEmail(e.target.value)}
         value={email}
-        error={error}
       />
       <Input
         type="password"
         name="Password"
         onChange={(e) => setPassword(e.target.value)}
         value={password}
-        error={error}
       />
+      {error && <p className="text-sm text-red-400 font-semibold">{error}</p>}
       <Button type="submit" name="Submit" onClick={onClickHandler} />
     </form>
   );

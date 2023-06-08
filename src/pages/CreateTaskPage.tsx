@@ -11,6 +11,8 @@ const CreateTaskPage = () => {
   const [priority, setPriority] = useState<number>();
   const [status, setStatus] = useState<number>();
 
+  const [error, setError] = useState<string>();
+
   const onClickHandler: React.MouseEventHandler<HTMLButtonElement> = async (
     e
   ) => {
@@ -32,10 +34,11 @@ const CreateTaskPage = () => {
       body: JSON.stringify(item),
     });
 
-    if (!res.ok) {
-      alert("an error occured");
-    } else {
+    if (res.ok) {
       navigate("/tasks");
+    } else {
+      const data = await res.json();
+      setError(data.message);
     }
 
     setTitle("");
@@ -82,6 +85,7 @@ const CreateTaskPage = () => {
         value={date}
         onChange={(e) => setDate(e.target.value)}
       /> */}
+      {error && <p className="text-sm text-red-400 font-semibold">{error}</p>}
       <Button type="submit" name="Submit" onClick={onClickHandler} />
     </form>
   );

@@ -7,11 +7,13 @@ import { useNavigate } from "react-router-dom";
 const SignUpPage: React.FC = () => {
   const userCtx = useContext(UserContext);
   const navigate = useNavigate();
+
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [error] = useState<string | undefined>(undefined);
+
+  const [error, setError] = useState<string>();
 
   const onClickHandler: React.MouseEventHandler<HTMLButtonElement> = async (
     e
@@ -40,14 +42,12 @@ const SignUpPage: React.FC = () => {
         userCtx.login(data.token, data.user);
         navigate("/");
       } else {
-        console.log(res);
-        alert("Bad request, try another email!");
+        const data = await res.json();
+        setError(data.message);
       }
     } catch (e) {
       alert("An error occured!");
     }
-
-    // setError("Please fill the field");
   };
 
   return (
@@ -58,29 +58,26 @@ const SignUpPage: React.FC = () => {
         name="First Name"
         onChange={(e) => setFirstName(e.target.value)}
         value={firstName}
-        error={error}
       />
       <Input
         type="text"
         name="Last Name"
         onChange={(e) => setLastName(e.target.value)}
         value={lastName}
-        error={error}
       />
       <Input
         type="email"
         name="Email"
         onChange={(e) => setEmail(e.target.value)}
         value={email}
-        error={error}
       />
       <Input
         type="password"
         name="Password"
         onChange={(e) => setPassword(e.target.value)}
         value={password}
-        error={error}
       />
+      {error && <p className="text-sm text-red-400 font-semibold">{error}</p>}
       <Button type="submit" name="Submit" onClick={onClickHandler} />
     </form>
   );

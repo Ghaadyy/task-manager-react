@@ -13,6 +13,8 @@ const TaskGrid = () => {
   const inProgressDropRef = useCreateDropRef(TaskStatus.InProgess);
   const completedDropRef = useCreateDropRef(TaskStatus.Completed);
 
+  // const addInputRef = useRef<HTMLInputElement>();
+
   useEffect(() => {
     fetch(`https://localhost:7272/api/tasks/user/${userCtx.user?.id}`, {
       headers: {
@@ -39,15 +41,38 @@ const TaskGrid = () => {
     (task) => task.status === TaskStatus.Completed
   );
 
+  // const [tags, setTags] = useState<any[]>([]);
+
   return (
     <div className="flex flex-row gap-8 overflow-x-scroll px-8 py-4 max-h-[90vh] overflow-y-scroll">
       <TaskColumn ref={todoDropRef} text="To do" tasks={todoTasks} />
       <TaskColumn
         ref={inProgressDropRef}
-        text="To do"
+        text="In progress"
         tasks={inProgressTasks}
       />
-      <TaskColumn ref={completedDropRef} text="To do" tasks={completedTasks} />
+      <TaskColumn
+        ref={completedDropRef}
+        text="Completed"
+        tasks={completedTasks}
+      />
+      {/* <div>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            setTags((prevTags) => prevTags.concat(addInputRef.current?.value));
+          }}
+          className="flex flex-row items-center border-2 rounded-lg px-1"
+        >
+          <input
+            type="text"
+            className="w-full outline-none"
+            placeholder="Add column"
+            ref={addInputRef as React.LegacyRef<HTMLInputElement>}
+          />
+          <p className="font-bold text-lg">+</p>
+        </form>
+      </div> */}
     </div>
   );
 };
