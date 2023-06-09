@@ -16,8 +16,13 @@ const TaskProvider: React.FC<{ children: React.ReactNode }> = ({
       setTasks(tasks);
     },
     updateTask: (task) => {
-      setTasks((prevTasks) =>
-        prevTasks.map((prevTask) => (prevTask.id !== task.id ? prevTask : task))
+      setTasks(
+        (prevTasks) => {
+          let t = prevTasks.filter((prevTask) => prevTask.id !== task.id);
+          t.push(task);
+          return t;
+        }
+        // prevTasks.map((prevTask) => (prevTask.id !== task.id ? prevTask : task))
       );
     },
     deleteTask: (task) => {
