@@ -2,9 +2,11 @@ import { useContext } from "react";
 import { NavItem } from "./NavItem";
 import UserContext from "../../store/user-context";
 import { useNavigate } from "react-router-dom";
+import TaskContext from "../../store/task-context";
 
 export const NavBar: React.FC = () => {
   const userCtx = useContext(UserContext);
+  const taskCtx = useContext(TaskContext);
   const navigate = useNavigate();
 
   return (
@@ -26,6 +28,7 @@ export const NavBar: React.FC = () => {
             className="text-white"
             onClick={() => {
               userCtx.logout();
+              taskCtx.getTasks([]);
               navigate("/");
             }}
           >

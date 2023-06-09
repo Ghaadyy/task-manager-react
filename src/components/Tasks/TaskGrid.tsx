@@ -16,11 +16,14 @@ const TaskGrid = () => {
   // const addInputRef = useRef<HTMLInputElement>();
 
   useEffect(() => {
-    fetch(`https://localhost:7272/api/tasks/user/${userCtx.user?.id}`, {
-      headers: {
-        Authorization: `Bearer ${userCtx.token}`,
-      },
-    })
+    fetch(
+      `${process.env.REACT_APP_API_URL}/api/tasks/user/${userCtx.user?.id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${userCtx.token}`,
+        },
+      }
+    )
       .then(async (res) => {
         const data = await res.json();
         console.log(data);

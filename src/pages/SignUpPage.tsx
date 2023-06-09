@@ -28,19 +28,22 @@ const SignUpPage: React.FC = () => {
     };
 
     try {
-      const res = await fetch("https://localhost:7272/api/users/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(user),
-      });
+      const res = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/users/signup`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(user),
+        }
+      );
 
       if (res.ok) {
         type ResponeType = { token: string; user: User };
         const data: ResponeType = await res.json();
         userCtx.login(data.token, data.user);
-        navigate("/");
+        navigate("/tasks");
       } else {
         const data = await res.json();
         setError(data.message);

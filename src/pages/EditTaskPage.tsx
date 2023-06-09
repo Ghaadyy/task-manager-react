@@ -42,7 +42,7 @@ const EditTaskPage: React.FC = () => {
       status,
     };
 
-    fetch(`https://localhost:7272/api/tasks/${id}`, {
+    fetch(`${process.env.REACT_APP_API_URL}/api/tasks/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

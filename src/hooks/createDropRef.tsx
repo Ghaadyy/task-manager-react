@@ -29,7 +29,7 @@ export const useCreateDropRef = (status: TaskStatus) => {
       item.status = status;
 
       updateTask(item, userCtx.token, status);
-      taskCtx.updateTask(item);
+      taskCtx.updateStatus(item);
     },
   }));
 

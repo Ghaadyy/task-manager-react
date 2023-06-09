@@ -44,7 +44,7 @@ const TaskItem: React.FC<Props> = ({ task }) => {
   }
 
   const deleteHandler = () => {
-    fetch(`https://localhost:7272/api/tasks/${task.id}`, {
+    fetch(`${process.env.REACT_APP_API_URL}/api/tasks/${task.id}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${userCtx.token}`,

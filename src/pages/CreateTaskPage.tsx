@@ -25,7 +25,7 @@ const CreateTaskPage = () => {
       userID: userCtx.user?.id,
     };
 
-    const res = await fetch("https://localhost:7272/api/tasks", {
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/tasks`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

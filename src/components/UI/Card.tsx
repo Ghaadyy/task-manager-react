@@ -20,7 +20,7 @@ const Card: React.FC<Props> = ({
       onClick={onClick}
       className={`bg-white flex flex-col border-2 ${
         isMoveable && "border-[#979797]"
-      }  px-4 py-2 rounded-lg w-[300px] ${
+      } justify-between px-4 py-3 rounded-lg w-[300px] ${
         small ? "min-h-[70px]" : "min-h-[100px]"
       } ${
         isMoveable && "hover:shadow-xl"
