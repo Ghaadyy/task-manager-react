@@ -1,46 +1,70 @@
-# Getting Started with Create React App
+# Task Manager App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### About the project
 
-## Available Scripts
+This is a task manager app that allows you to set your tasks and manage them according to their current status.
 
-In the project directory, you can run:
+#### Features implemented
 
-### `npm start`
+- Create tasks, and edited them after they have been created.
+- Delete existing tasks when they aren't relevant anymore.
+- Create your own account, to save your tasks on the backend server.
+- Simple UI that allows you to drap and drop the tasks to their current status _(e.g. Todo, In Progress, Completed)_
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Tech stack used
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+The project is built using **React.js** for the front end client side and styled using **TailwindCSS**.
 
-### `npm test`
+The API is built using **C#** & **ASP.NET**.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### Additional libraries
 
-### `npm run build`
+The drag and drop feature was implemented using `react-dnd` and the toasts that show on either successful or failed operations is implemented using `react-toastify`.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Getting started
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. Clone the repository
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
+git clone https://github.com/Ghaadyy/task-manager-react
+```
 
-### `npm run eject`
+2. Install all the dependencies
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```
+npm install
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+3. Create a `.env` file inside the root directory and create the enviroment variables
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```
+REACT_APP_API_URL = <the_api_url_here>
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+4. Run the backend API and the client using
 
-## Learn More
+```
+npm run start
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+The client should run on `http://localhost:3000`
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Usage
+
+You need to either create an account or login with your existing account to access the app.
+
+![Tasks Page](images/login-page.png)
+
+You can first create your new task here, and if all is well a green colored toast should notify you that the task has been created.
+
+![Tasks Page](images/create-task-page.png)
+
+Here is the task manager main page, where you can drag and drop tasks, delete them or edit them.
+
+![Tasks Page](images/tasks-page.png)
+
+### Contact
+
+Ghady - [Github](https://github.com/Ghaadyy) - [Website](https://ghady.me)
+
+Project Link : https://github.com/Ghaadyy/task-manager-react
