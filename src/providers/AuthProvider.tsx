@@ -1,12 +1,21 @@
 import React, { useState } from "react";
-import UserContext, { User, UserContextType } from "../store/user-context";
+import UserContext, { UserContextType } from "../store/user-context";
+import { isExpired } from "react-jwt";
+import { User } from "../Models/User";
 
 const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-  const [token, setToken] = useState<string | null>(null);
-  const [user, setUser] = useState<User | null>(null);
+  const storedToken = localStorage.getItem("token");
+  const storedUser = localStorage.getItem("user");
+
+  const isValidToken = storedToken ? !isExpired(storedToken) : false;
+
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(isValidToken);
+  const [token, setToken] = useState<string | null>(storedToken);
+  const [user, setUser] = useState<User | null>(
+    storedUser && JSON.parse(storedUser)
+  );
 
   const defaultState: UserContextType = {
     isLoggedIn,
@@ -16,11 +25,15 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       setToken(userToken);
       setUser(loggedInUser);
       setIsLoggedIn(true);
+      localStorage.setItem("user", JSON.stringify(loggedInUser));
+      localStorage.setItem("token", userToken);
     },
     logout() {
       setToken(null);
       setUser(null);
       setIsLoggedIn(false);
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
     },
   };
 

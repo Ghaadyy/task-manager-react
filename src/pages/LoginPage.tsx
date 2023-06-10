@@ -1,9 +1,10 @@
 import React, { useContext, useState } from "react";
 import Input from "../components/UI/Input";
 import Button from "../components/UI/Button";
-import UserContext, { User } from "../store/user-context";
+import UserContext from "../store/user-context";
 import { useNavigate } from "react-router-dom";
 import { toastError } from "../components/Layout/RootLayout";
+import { User } from "../Models/User";
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();

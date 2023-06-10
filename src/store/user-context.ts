@@ -1,12 +1,5 @@
 import { createContext } from "react";
-
-export type User = {
-  email: string;
-  password: string;
-  id: string;
-  firstName: string;
-  lastName: string;
-};
+import { User } from "../Models/User";
 
 export type UserContextType = {
   token: string | null;

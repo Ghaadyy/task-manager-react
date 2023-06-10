@@ -4,6 +4,7 @@ import UserContext from "../../store/user-context";
 import TaskContext from "../../store/task-context";
 import { useCreateDropRef } from "../../hooks/createDropRef";
 import TaskColumn from "./TaskColumn";
+import { toastError } from "../Layout/RootLayout";
 
 const TaskGrid = () => {
   const taskCtx = useContext(TaskContext);
@@ -27,7 +28,7 @@ const TaskGrid = () => {
         console.log(data);
         taskCtx.getTasks(data);
       })
-      .catch((e) => console.log(e));
+      .catch((e) => toastError());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
