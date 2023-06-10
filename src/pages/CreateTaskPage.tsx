@@ -1,17 +1,15 @@
 import React, { useContext, useState } from "react";
 import Input from "../components/UI/Input";
 import Button from "../components/UI/Button";
-import { useNavigate } from "react-router-dom";
 import UserContext from "../store/user-context";
+import Select from "../components/UI/Select";
+import { toastError, toastSuccess } from "../components/Layout/RootLayout";
 
 const CreateTaskPage = () => {
   const userCtx = useContext(UserContext);
-  const navigate = useNavigate();
   const [title, setTitle] = useState<string>("");
   const [priority, setPriority] = useState<number>();
   const [status, setStatus] = useState<number>();
-
-  const [error, setError] = useState<string>();
 
   const onClickHandler: React.MouseEventHandler<HTMLButtonElement> = async (
     e
@@ -35,10 +33,10 @@ const CreateTaskPage = () => {
     });
 
     if (res.ok) {
-      navigate("/tasks");
+      toastSuccess("Successfully added task!");
     } else {
       const data = await res.json();
-      setError(data.message);
+      toastError(data.message);
     }
 
     setTitle("");
@@ -55,9 +53,8 @@ const CreateTaskPage = () => {
         onChange={(e) => setTitle(e.target.value)}
         value={title}
       />
-      <select
+      <Select
         name="priority"
-        className="max-w-[250px] w-full border-2 rounded-lg p-3 outline-none focus:border-[#979797]"
         onChange={(e) => setPriority(Number.parseInt(e.target.value))}
       >
         <option selected={true} disabled>
@@ -66,10 +63,9 @@ const CreateTaskPage = () => {
         <option value={0}>Low</option>
         <option value={1}>Medium</option>
         <option value={2}>High</option>
-      </select>
-      <select
+      </Select>
+      <Select
         name="status"
-        className="max-w-[250px] w-full border-2 rounded-lg p-3 outline-none focus:border-[#979797]"
         onChange={(e) => setStatus(Number.parseInt(e.target.value))}
       >
         <option selected={true} disabled>
@@ -78,14 +74,7 @@ const CreateTaskPage = () => {
         <option value={0}>Todo</option>
         <option value={1}>In Progress</option>
         <option value={2}>Completed</option>
-      </select>
-      {/* <Input
-        type="date"
-        name="date"
-        value={date}
-        onChange={(e) => setDate(e.target.value)}
-      /> */}
-      {error && <p className="text-sm text-red-400 font-semibold">{error}</p>}
+      </Select>
       <Button type="submit" name="Submit" onClick={onClickHandler} />
     </form>
   );

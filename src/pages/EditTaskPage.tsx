@@ -5,6 +5,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import UserContext from "../store/user-context";
 import Button from "../components/UI/Button";
 import TaskContext from "../store/task-context";
+import Select from "../components/UI/Select";
+import { toastError, toastSuccess } from "../components/Layout/RootLayout";
 
 const EditTaskPage: React.FC = () => {
   const navigate = useNavigate();
@@ -49,15 +51,17 @@ const EditTaskPage: React.FC = () => {
         Authorization: `Bearer ${userCtx.token}`,
       },
       body: JSON.stringify(item),
-    }).then(() => {
-      taskCtx.updateTask({
-        title: title as string,
-        id: id as string,
-        status: status as TaskStatus,
-        priority: priority as TaskPriority,
-      });
-      navigate("/tasks");
-    });
+    })
+      .then(() => {
+        taskCtx.updateTask({
+          title: title as string,
+          id: id as string,
+          status: status as TaskStatus,
+          priority: priority as TaskPriority,
+        });
+        toastSuccess("Successfully edited task!");
+      })
+      .catch((e) => toastError(e));
   };
 
   return (
@@ -72,26 +76,24 @@ const EditTaskPage: React.FC = () => {
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
-      <select
+      <Select
         name="priority"
         value={priority}
-        className="max-w-[250px] w-full border-2 rounded-lg p-3 outline-none focus:border-[#979797]"
         onChange={(e) => setPriority(Number.parseInt(e.target.value))}
       >
         <option value={0}>Low</option>
         <option value={1}>Medium</option>
         <option value={2}>High</option>
-      </select>
-      <select
+      </Select>
+      <Select
         name="status"
         value={status}
-        className="max-w-[250px] w-full border-2 rounded-lg p-3 outline-none focus:border-[#979797]"
         onChange={(e) => setStatus(Number.parseInt(e.target.value))}
       >
         <option value={0}>Todo</option>
         <option value={1}>In Progress</option>
         <option value={2}>Completed</option>
-      </select>
+      </Select>
       <Button type="submit" name="Submit" />
     </form>
   );

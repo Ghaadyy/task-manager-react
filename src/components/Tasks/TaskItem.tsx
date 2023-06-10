@@ -5,6 +5,7 @@ import { Task, TaskPriority } from "../../Models/Task";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../../store/user-context";
 import TaskContext from "../../store/task-context";
+import { toastError, toastSuccess } from "../Layout/RootLayout";
 
 type Props = {
   task: Task;
@@ -52,8 +53,11 @@ const TaskItem: React.FC<Props> = ({ task }) => {
     })
       .then(() => {
         taskCtx.deleteTask(task);
+        toastSuccess("Successfully deleted task!");
       })
-      .catch((e) => console.log(e));
+      .catch((e) => {
+        toastError("An error occured!");
+      });
   };
 
   return (

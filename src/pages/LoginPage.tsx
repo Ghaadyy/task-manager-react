@@ -3,6 +3,7 @@ import Input from "../components/UI/Input";
 import Button from "../components/UI/Button";
 import UserContext, { User } from "../store/user-context";
 import { useNavigate } from "react-router-dom";
+import { toastError } from "../components/Layout/RootLayout";
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
@@ -45,7 +46,7 @@ const LoginPage: React.FC = () => {
         setError(data.message);
       }
     } catch (e) {
-      alert("An error occured!");
+      toastError("An error occured!");
     }
 
     setEmail("");
