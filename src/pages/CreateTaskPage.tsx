@@ -23,20 +23,24 @@ const CreateTaskPage = () => {
       userID: userCtx.user?.id,
     };
 
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/tasks`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${userCtx.token}`,
-      },
-      body: JSON.stringify(item),
-    });
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/tasks`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userCtx.token}`,
+        },
+        body: JSON.stringify(item),
+      });
 
-    if (res.ok) {
-      toastSuccess("Successfully added task!");
-    } else {
-      const data = await res.json();
-      toastError(data.message);
+      if (res.ok) {
+        toastSuccess("Successfully added task!");
+      } else {
+        const data = await res.json();
+        toastError(data.message);
+      }
+    } catch {
+      toastError();
     }
 
     setTitle("");

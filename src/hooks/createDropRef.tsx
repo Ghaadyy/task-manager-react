@@ -4,19 +4,28 @@ import { Task, TaskStatus } from "../Models/Task";
 import { useContext } from "react";
 import TaskContext from "../store/task-context";
 import UserContext from "../store/user-context";
+import { toastError } from "../components/Layout/RootLayout";
 
-const updateTask = (task: Task, token: string | null, status: TaskStatus) => {
-  fetch("https://localhost:7272/api/tasks", {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({
-      taskID: task.id,
-      status,
-    }),
-  });
+const updateTask = async (
+  task: Task,
+  token: string | null,
+  status: TaskStatus
+) => {
+  try {
+    await fetch("https://localhost:7272/api/tasks", {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        taskID: task.id,
+        status,
+      }),
+    });
+  } catch {
+    toastError("An error occured!");
+  }
 };
 
 export const useCreateDropRef = (status: TaskStatus) => {

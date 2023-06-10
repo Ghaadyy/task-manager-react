@@ -61,7 +61,7 @@ const EditTaskPage: React.FC = () => {
         });
         toastSuccess("Successfully edited task!");
       })
-      .catch((e) => toastError(e));
+      .catch(() => toastError());
   };
 
   return (

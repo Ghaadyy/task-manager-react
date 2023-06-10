@@ -45,8 +45,8 @@ const LoginPage: React.FC = () => {
         const data = await res.json();
         setError(data.message);
       }
-    } catch (e) {
-      toastError("An error occured!");
+    } catch {
+      toastError();
     }
 
     setEmail("");

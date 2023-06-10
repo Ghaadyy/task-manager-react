@@ -5,7 +5,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export const toastSuccess = (message: string) => toast.success(message);
-export const toastError = (message: string) => toast.error(message);
+export const toastError = (message?: string) =>
+  toast.error(message || "An error occured!");
 
 const RootLayout: React.FC = () => {
   return (
