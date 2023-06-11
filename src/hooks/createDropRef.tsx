@@ -1,6 +1,6 @@
 import { useDrop } from "react-dnd";
 import { ItemTypes } from "../components/Tasks/TaskItem";
-import { Task, TaskStatus } from "../Models/Task";
+import { Task, TaskStatus } from "../models/Task";
 import { useContext } from "react";
 import TaskContext from "../store/task-context";
 import UserContext from "../store/user-context";

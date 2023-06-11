@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import Card from "../UI/Card";
 import { useDrag } from "react-dnd";
-import { Task, TaskPriority } from "../../Models/Task";
+import { Task, TaskPriority } from "../../models/Task";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../../store/user-context";
 import TaskContext from "../../store/task-context";

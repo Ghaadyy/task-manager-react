@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import Input from "../components/UI/Input";
-import { Task, TaskPriority, TaskStatus } from "../Models/Task";
+import { Task, TaskPriority, TaskStatus } from "../models/Task";
 import { useNavigate, useParams } from "react-router-dom";
 import UserContext from "../store/user-context";
 import Button from "../components/UI/Button";

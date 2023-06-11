@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import { TaskStatus } from "../../Models/Task";
+import { TaskStatus } from "../../models/Task";
 import UserContext from "../../store/user-context";
 import TaskContext from "../../store/task-context";
 import { useCreateDropRef } from "../../hooks/createDropRef";

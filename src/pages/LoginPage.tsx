@@ -4,7 +4,7 @@ import Button from "../components/UI/Button";
 import UserContext from "../store/user-context";
 import { useNavigate } from "react-router-dom";
 import { toastError } from "../components/Layout/RootLayout";
-import { User } from "../Models/User";
+import { User } from "../models/User";
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import UserContext, { UserContextType } from "../store/user-context";
 import { isExpired } from "react-jwt";
-import { User } from "../Models/User";
+import { User } from "../models/User";
 
 const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,

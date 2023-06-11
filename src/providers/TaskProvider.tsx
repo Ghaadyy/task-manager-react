@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import TaskContext, { TaskContextType } from "../store/task-context";
-import { Task } from "../Models/Task";
+import { Task } from "../models/Task";
 
 const TaskProvider: React.FC<{ children: React.ReactNode }> = ({
   children,

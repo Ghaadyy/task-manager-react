@@ -1,6 +1,6 @@
 import React, { forwardRef } from "react";
 import TaskItem from "./TaskItem";
-import { Task } from "../../Models/Task";
+import { Task } from "../../models/Task";
 import Card from "../UI/Card";
 
 type Props = {
