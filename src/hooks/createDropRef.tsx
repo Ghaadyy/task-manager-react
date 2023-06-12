@@ -12,7 +12,7 @@ const updateTask = async (
   status: TaskStatus
 ) => {
   try {
-    await fetch("https://localhost:7272/api/tasks", {
+    await fetch(`${process.env.REACT_APP_API_URL}/api/tasks`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

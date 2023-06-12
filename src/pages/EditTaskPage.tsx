@@ -19,7 +19,7 @@ const EditTaskPage: React.FC = () => {
   const [status, setStatus] = useState<TaskStatus>();
 
   useEffect(() => {
-    fetch(`https://localhost:7272/api/tasks/${id}`, {
+    fetch(`${process.env.REACT_APP_API_URL}/api/tasks/${id}`, {
       headers: {
         Authorization: `Bearer ${userCtx.token}`,
       },
