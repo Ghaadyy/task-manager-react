@@ -44,6 +44,11 @@ const EditTaskPage: React.FC = () => {
       status,
     };
 
+    if (priority === undefined || status === undefined) {
+      toastError("Please fill all the fields.");
+      return;
+    }
+
     fetch(`${process.env.REACT_APP_API_URL}/api/tasks/${id}`, {
       method: "PUT",
       headers: {

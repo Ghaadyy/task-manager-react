@@ -51,12 +51,14 @@ const TaskItem: React.FC<Props> = ({ task }) => {
         Authorization: `Bearer ${userCtx.token}`,
       },
     })
-      .then(() => {
-        taskCtx.deleteTask(task);
-        toastSuccess("Successfully deleted task!");
+      .then((res) => {
+        if (res.ok) {
+          taskCtx.deleteTask(task);
+          toastSuccess("Successfully deleted task!");
+        } else toastError();
       })
       .catch((e) => {
-        toastError("An error occured!");
+        toastError();
       });
   };
 

@@ -23,6 +23,11 @@ const CreateTaskPage = () => {
       userID: userCtx.user?.id,
     };
 
+    if (priority === undefined || status === undefined) {
+      toastError("Please fill all the fields.");
+      return;
+    }
+
     try {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/api/tasks`, {
         method: "POST",
