@@ -17,10 +17,13 @@ const SignUpPage: React.FC = () => {
 
   const [error, setError] = useState<string>();
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const onClickHandler: React.MouseEventHandler<HTMLButtonElement> = async (
     e
   ) => {
     e.preventDefault();
+    setIsLoading(true);
 
     const user = {
       email,
@@ -53,6 +56,8 @@ const SignUpPage: React.FC = () => {
     } catch {
       toastError();
     }
+
+    setIsLoading(false);
   };
 
   return (
@@ -83,7 +88,12 @@ const SignUpPage: React.FC = () => {
         value={password}
       />
       {error && <p className="text-sm text-red-400 font-semibold">{error}</p>}
-      <Button type="submit" name="Submit" onClick={onClickHandler} />
+      <Button
+        type="submit"
+        name="Submit"
+        onClick={onClickHandler}
+        isLoading={isLoading}
+      />
     </form>
   );
 };
