@@ -11,10 +11,13 @@ const CreateTaskPage = () => {
   const [priority, setPriority] = useState<number>();
   const [status, setStatus] = useState<number>();
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const onClickHandler: React.MouseEventHandler<HTMLButtonElement> = async (
     e
   ) => {
     e.preventDefault();
+    setIsLoading(true);
 
     const item = {
       title,
@@ -51,6 +54,7 @@ const CreateTaskPage = () => {
     setTitle("");
     setPriority(undefined);
     setStatus(undefined);
+    setIsLoading(false);
   };
 
   return (
@@ -84,7 +88,12 @@ const CreateTaskPage = () => {
         <option value={1}>In Progress</option>
         <option value={2}>Completed</option>
       </Select>
-      <Button type="submit" name="Submit" onClick={onClickHandler} />
+      <Button
+        type="submit"
+        name="Submit"
+        onClick={onClickHandler}
+        isLoading={isLoading}
+      />
     </form>
   );
 };

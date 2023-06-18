@@ -18,6 +18,8 @@ const EditTaskPage: React.FC = () => {
   const [priority, setPriority] = useState<TaskPriority>();
   const [status, setStatus] = useState<TaskStatus>();
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/api/tasks/${id}`, {
       headers: {
@@ -37,6 +39,7 @@ const EditTaskPage: React.FC = () => {
 
   const submitHandler: React.FormEventHandler = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     const item = {
       title,
@@ -67,6 +70,8 @@ const EditTaskPage: React.FC = () => {
         toastSuccess("Successfully edited task!");
       })
       .catch(() => toastError());
+
+    setIsLoading(false);
   };
 
   return (
@@ -99,7 +104,7 @@ const EditTaskPage: React.FC = () => {
         <option value={1}>In Progress</option>
         <option value={2}>Completed</option>
       </Select>
-      <Button type="submit" name="Submit" />
+      <Button type="submit" name="Submit" isLoading={isLoading} />
     </form>
   );
 };
